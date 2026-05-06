@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DV Prod CECL Release 2026 — Release Work Items</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--navy:#2b495e;--primary:#51738b;--primary-hover:#10689B;--green:#72bf44;--red:#D51923;--orange:#f07d23;--surface:#fafafa;--app-surface:#fff;--on-base:#424242;--on-app-surface:#2b495e;--border:rgba(0,0,0,0.08);--grey:#757575;--grey-light:#ebebeb;--grey-dark:#424242}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans Pro','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;color:var(--on-base);background:var(--surface);line-height:1.5}
+.header{background:var(--navy);color:#fff;padding:28px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px}
+.header h1{font-size:1.4rem;font-weight:700;letter-spacing:.3px}
+.header h1 span{color:var(--green)}
+.header .meta{font-size:13px;color:rgba(255,255,255,.7);text-align:right}
+.header .meta strong{color:#fff}
+.stats{background:var(--app-surface);border-bottom:1px solid var(--border);padding:18px 40px;display:flex;gap:30px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:1px}
+.stat .val{font-size:1.5rem;font-weight:900;color:var(--navy)}
+.stat .val.g{color:var(--green)}.stat .val.r{color:var(--red)}.stat .val.o{color:var(--orange)}.stat .val.b{color:#5e91dd}
+.stat .lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--grey)}
+.container{max-width:1500px;margin:0 auto;padding:20px 40px 60px}
+.filters{background:var(--app-surface);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.filters label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--grey)}
+.filters select,.filters input[type=text]{padding:7px 12px;border:1px solid #d0d0d0;border-radius:6px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s}
+.filters select:focus,.filters input:focus{border-color:var(--primary)}
+.filters input[type=text]{min-width:250px}
+.filters select{min-width:160px}
+.filter-group{display:flex;align-items:center;gap:6px}
+.count-badge{background:var(--primary);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;margin-left:8px}
+table{width:100%;border-collapse:collapse;background:var(--app-surface);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+thead th{background:var(--navy);color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:9px 12px;text-align:left;white-space:nowrap;position:sticky;top:0;z-index:2;cursor:pointer;user-select:none}
+thead th:hover{background:#3a5a6f}
+thead th .sort-icon{margin-left:4px;opacity:.5;font-size:10px}
+tbody td{padding:7px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}
+tbody tr:hover{background:rgba(81,115,139,.04)}
+tbody tr:last-child td{border-bottom:none}
+.id-cell{font-weight:700;white-space:nowrap}
+.id-cell a{color:var(--primary);text-decoration:none}
+.id-cell a:hover{color:var(--primary-hover);text-decoration:underline}
+.title-cell{max-width:420px}
+.type-pill{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.type-pill.Bug{background:rgba(213,25,35,.1);color:var(--red)}
+.type-pill.UserStory{background:rgba(114,191,68,.12);color:#3d7a1a}
+.type-pill.Task{background:rgba(81,115,139,.12);color:var(--primary)}
+.type-pill.Feature{background:rgba(240,125,35,.12);color:#b85c12}
+.state-pill{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:600;white-space:nowrap}
+.state-pill.Closed{background:#e8f5e1;color:#278200}
+.state-pill.Resolved{background:#e8f5e1;color:#278200}
+.state-pill.Test{background:#e3f0fd;color:#1a5fb4}
+.state-pill.New{background:#fff3e0;color:#b85c12}
+.state-pill.Development{background:#f3e8fd;color:#6a4d8a}
+.state-pill.default{background:#f5f5f5;color:var(--grey-dark)}
+.product-tag{display:inline-block;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:600;letter-spacing:.2px;white-space:nowrap;margin:1px 2px}
+.product-tag.ModelIQ{background:#fff0e0;color:#b85c12}
+.product-tag.Prof{background:#e3e9f0;color:var(--navy)}
+.product-tag.CECL{background:#e8f5e1;color:#3d7a1a}
+.product-tag.Dataverse{background:#e3f0fd;color:#1a5fb4}
+.product-tag.Planning{background:#f3e8fd;color:#6a4d8a}
+.product-tag.default{background:#f0f0f0;color:var(--grey-dark)}
+.assigned-cell{font-size:12px;color:var(--grey);white-space:nowrap}
+.severity-pill{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+.severity-pill.sev1{background:rgba(213,25,35,.12);color:var(--red)}
+.severity-pill.sev2{background:rgba(240,125,35,.12);color:#b85c12}
+.severity-pill.sev3{background:rgba(94,145,221,.12);color:#1a5fb4}
+.severity-pill.sev4{background:#f5f5f5;color:var(--grey-dark)}
+.cat-pill{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+.group-row td{background:#f0f3f5;padding:10px 12px;border-bottom:2px solid var(--primary);cursor:pointer;user-select:none}
+.group-row .group-title{font-size:13px;font-weight:900;color:var(--navy);text-transform:uppercase;letter-spacing:.4px}
+.group-row .group-count{background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px}
+.group-row .group-chevron{color:var(--grey);font-size:11px;margin-right:8px;transition:transform .2s;display:inline-block}
+.group-row.collapsed .group-chevron{transform:rotate(-90deg)}
+.group-row .group-progress{display:inline-flex;gap:4px;margin-left:12px;align-items:center}
+.group-row .gp-bar{height:6px;border-radius:3px;display:inline-block}
+.group-row .gp-done{background:var(--green)}.group-row .gp-test{background:#5e91dd}.group-row .gp-open{background:var(--orange)}
+.group-row .gp-label{font-size:10px;font-weight:600;color:var(--grey);margin-left:4px}
+.no-results{text-align:center;padding:40px;color:var(--grey);font-size:16px}
+@media print{.filters{display:none}.header{padding:15px 20px}.container{padding:10px}}
+@media(max-width:768px){.header,.stats,.container,.filters{padding-left:15px;padding-right:15px}.title-cell{max-width:200px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div><h1><i class="fa-solid fa-tag" style="margin-right:8px;opacity:.7"></i><span>DV_Prod_CECL_Release_2026</span> — Release Work Items</h1></div>
+  <div class="meta"><div><strong id="total-count">35</strong> work items &middot; <!--__TIMESTAMP__-->Refreshed 6 May 2026, 10:00<!--__TIMESTAMP_END__--></div></div>
+</div>
+<div class="stats" id="stats-bar"></div>
+<div class="container">
+  <div class="filters">
+    <div class="filter-group"><label><i class="fa-solid fa-filter"></i> Search:</label><input type="text" id="f-search" placeholder="Search by ID, title, assignee, created by..."></div>
+    <div class="filter-group"><label>Product:</label><select id="f-product"><option value="">All Products</option></select></div>
+    <div class="filter-group"><label>Type:</label><select id="f-type"><option value="">All Types</option></select></div>
+    <div class="filter-group"><label>State:</label><select id="f-state"><option value="">All States</option></select></div>
+    <div class="filter-group"><label>Assigned To:</label><select id="f-assigned"><option value="">All</option></select></div>
+    <div class="filter-group"><label>Created By:</label><select id="f-createdBy"><option value="">All</option></select></div>
+    <div class="filter-group"><label>Severity:</label><select id="f-severity"><option value="">All</option></select></div>
+    <div class="filter-group"><label>Category:</label><select id="f-category"><option value="">All Categories</option></select></div>
+    <div class="filter-group"><label>Status:</label><select id="f-completion"><option value="">All</option><option value="done">Completed</option><option value="test">In Test</option><option value="open">Open / In Progress</option><option value="notdone">Not Completed</option></select></div>
+    <div class="filter-group" style="margin-left:auto"><label>Group By:</label><select id="f-groupby"><option value="">No Grouping</option><option value="category" selected>Category</option><option value="product">Product</option><option value="state">State</option><option value="type">Type</option><option value="assignedTo">Assigned To</option><option value="createdBy">Created By</option><option value="severity">Severity</option></select></div>
+    <span class="count-badge" id="visible-count">38</span>
+  </div>
+  <table>
+    <thead><tr>
+      <th data-col="id" style="width:70px">ID <i class="fa-solid fa-sort sort-icon"></i></th>
+      <th data-col="type" style="width:90px">Type <i class="fa-solid fa-sort sort-icon"></i></th>
+      <th data-col="title">Title <i class="fa-solid fa-sort sort-icon"></i></th>
+      <th data-col="state" style="width:110px">State <i class="fa-solid fa-sort sort-icon"></i></th>
+      <th data-col="product" style="width:130px">Product</th>
+      <th data-col="assignedTo" style="width:140px">Assigned To <i class="fa-solid fa-sort sort-icon"></i></th>
+      <th data-col="createdBy" style="width:140px">Created By <i class="fa-solid fa-sort sort-icon"></i></th>
+      <th data-col="severity" style="width:100px">Severity <i class="fa-solid fa-sort sort-icon"></i></th>
+      <th data-col="category" style="width:160px">Category <i class="fa-solid fa-sort sort-icon"></i></th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <div class="no-results" id="no-results" style="display:none"><i class="fa-solid fa-search" style="font-size:24px;margin-bottom:10px;display:block"></i>No work items match your filters</div>
+</div>
+
+<script>
+const ADO='https://empyrean-solutions.visualstudio.com/Empyrean%20Dataverse/_workitems/edit/';
+/*__RAW_START__*/const RAW=[{"id":"151327","type":"Bug","title":"CECLAccountNum is null after importing LLC when changed from use imported value to use call code","assignedTo":"Christopher Garde","createdBy":"Yamini Karthick","severity":"2 - High","state":"Development","tags":"DV_Prod_CECL_Release_2026"},{"id":"151322","type":"Bug","title":"CECLAccountNum missing in investments_account table, the import of investments fails during normalisation","assignedTo":"Yamini Karthick","createdBy":"Yamini Karthick","severity":"1 - Critical","state":"Closed","tags":"DV_Prod_CECL_Release_2026"},{"id":"151318","type":"Bug","title":"Account Assignments, CECLAccountNum- Accrual codes not removed from ceclaccountnum rulesets when the accrual code is deleted from the import file","assignedTo":"Shane O'Halloran","createdBy":"Yamini Karthick","severity":"4 - Low","state":"New","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"151274","type":"Bug","title":"Investments - Getting Normalization failed error for Investments in regression env","assignedTo":"Yamini Karthick","createdBy":"Sahitya Dilip","severity":"2 - High","state":"Closed","tags":"DataVerse; DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"150649","type":"Bug","title":"Model IQ / CECL | New Data Source Type: ChargeOff/Recovery | wrong Validation Message when import invalid RecoveredAmnt values","assignedTo":"Yiling Quan","createdBy":"Yiling Quan","severity":"2 - High","state":"Test","tags":"DataVerse; DV_Prod_CECL_Release_2026; Explorer; RequestingProduct_CECL"},{"id":"150648","type":"Bug","title":"Model IQ / CECL | New Data Source Type: ChargeOff/Recovery | wrong Validation Message when import invalid ChargedOffAmnt values","assignedTo":"Yiling Quan","createdBy":"Yiling Quan","severity":"2 - High","state":"Test","tags":"DataVerse; DV_Prod_CECL_Release_2026; Explorer; RequestingProduct_CECL"},{"id":"150639","type":"Bug","title":"Use Call Code: New LLCC and Investments data sources should be automatically set to Use Call Code for CECLAccountNum","assignedTo":"Yamini Karthick","createdBy":"Shane O'Halloran","severity":"3 - Medium","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150638","type":"Bug","title":"Charge Off / Recovery: Normalisation Failed on import when the same InstrumentID appears multiple times","assignedTo":"Shane O'Halloran","createdBy":"Shane O'Halloran","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150637","type":"Bug","title":"Risk Rating Group dropdown list is empty","assignedTo":"Liam Fleming","createdBy":"Liam Fleming","severity":"2 - High","state":"Test","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"150636","type":"Bug","title":"FTP results: ftp_results still has data when ftp_restults_staging has none and review ftp is run","assignedTo":"Mario Barsoum","createdBy":"Yamini Karthick","severity":"3 - Medium","state":"New","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"150633","type":"User Story","title":"Improve Performance When Editing Balance Sheet and Income Statement","assignedTo":"Sahitya Dilip","createdBy":"Shane O'Halloran","severity":"","state":"QA Backlog","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"150561","type":"Bug","title":"Data import : Credit Modelling  - Incorrect error message when Eventdate is not provided in the imported file","assignedTo":"Yiling Quan","createdBy":"Sahitya Dilip","severity":"2 - High","state":"Closed","tags":"DataVerse; DV_Prod_CECL_Release_2026; RequestingProduct_ModelIQ"},{"id":"150424","type":"Bug","title":"Model IQ - Credit Modelling  : LLC and charge off recovery data source are not showing up for Credit Modelling in dataverse -> Data import page","assignedTo":"Sahitya Dilip","createdBy":"Sahitya Dilip","severity":"1 - Critical","state":"Closed","tags":"DataVerse; DV_Prod_CECL_Release_2026; RequestingProduct_ModelIQ"},{"id":"150423","type":"Bug","title":"errorCode SCHEDULE_RUN_FAILED found in shared dimensions API during Finalise FTP in dataverse","assignedTo":"Yamini Karthick","createdBy":"Yamini Karthick","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"150419","type":"Bug","title":"Data import : LLC / Investments : Getting Warning for GL BS Acct that it is a required field though the field is optional for CECL Module","assignedTo":"Yiling Quan","createdBy":"Sahitya Dilip","severity":"2 - High","state":"Closed","tags":"DataVerse; DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150415","type":"Bug","title":"Model IQ / CECL | Account Assignment | SubProductID | The SubProductID field is not saving values up to 500 characters in length","assignedTo":"Christopher Garde","createdBy":"Liam Fleming","severity":"4 - Low","state":"New","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150414","type":"Bug","title":"Data import - CECL Accountnum : Need to change the error message for CECLAccountNum","assignedTo":"Sahitya Dilip","createdBy":"Sahitya Dilip","severity":"3 - Medium","state":"Closed","tags":"2026.3; DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150290","type":"Bug","title":"CeclAccountNum is null when set to use call code in account assignment","assignedTo":"Yamini Karthick","createdBy":"Yamini Karthick","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150289","type":"Bug","title":"Account Assignment - CECLAccountNum, no confirmation pop up displayed when moving away from use call code to use single value","assignedTo":"Yamini Karthick","createdBy":"Yamini Karthick","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150238","type":"Bug","title":"Charge Off / Recoveries: Add partitioning","assignedTo":"Joey McCarthy","createdBy":"Shane O'Halloran","severity":"3 - Medium","state":"New","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"150182","type":"Bug","title":"CECLAccountNum  is null in the account table when Investments is imported.","assignedTo":"Yamini Karthick","createdBy":"Yamini Karthick","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150179","type":"Bug","title":"warning message not displayed on data import if CECLAccountNum field is included in the import file for a data source not set up to use imported value under account assignment","assignedTo":"Yamini Karthick","createdBy":"Yamini Karthick","severity":"3 - Medium","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150178","type":"Bug","title":"Data import for LLC : Incorrect error message shown when CECLAccountnum is either not provided or is not a whole number","assignedTo":"Sahitya Dilip","createdBy":"Sahitya Dilip","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"150169","type":"Bug","title":"Apple Bank: Issues with FTP","assignedTo":"Yamini Karthick","createdBy":"Shane O'Halloran","severity":"1 - Critical","state":"Closed","tags":"Customer Reported; DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"150042","type":"Bug","title":"Account Mapping warning status does not change until refreshed when imported file is deleted","assignedTo":"Yamini Karthick","createdBy":"Yamini Karthick","severity":"4 - Low","state":"Test","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"149112","type":"Bug","title":"Investment import : No errors are shown for CECLAccountnum when invalid values are provided or header is missing in the file","assignedTo":"Yiling Quan","createdBy":"Sahitya Dilip","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"149021","type":"Bug","title":"Change the icon for GL Settings nav item","assignedTo":"Yamini Karthick","createdBy":"Shane O'Halloran","severity":"4 - Low","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"149002","type":"Bug","title":"Risk rating scale validation - Risk rating scale is not highlighted in orange when there are unallocated risk rating codes","assignedTo":"Christopher Garde","createdBy":"Yamini Karthick","severity":"3 - Medium","state":"New","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"148985","type":"Bug","title":"Add missing tables to the events messaging system - CECL","assignedTo":"Liam Fleming","createdBy":"Joey McCarthy","severity":"2 - High","state":"Test","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"148951","type":"Bug","title":"General Ledger: Import Failure when Account Name greater than 100 characters","assignedTo":"Yamini Karthick","createdBy":"Shane O'Halloran","severity":"3 - Medium","state":"Closed","tags":"Customer Reported; DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"148779","type":"Bug","title":"Add DatasourceID to Instrument Messages being sent","assignedTo":"Liam Fleming","createdBy":"Joey McCarthy","severity":"2 - High","state":"Test","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"148559","type":"Bug","title":"Dataverse | Charge Off and Recovery - ChargeOffRecovery_Audit table is not being updated","assignedTo":"Christopher Garde","createdBy":"Diego Smaire","severity":"4 - Low","state":"New","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"148467","type":"User Story","title":"Dataverse Finalise FTP Step: Address issues with Pyramid / BI incremental refreshes","assignedTo":"Shane O'Halloran","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"148431","type":"Bug","title":"Wings FCU - Dataverse \"Upload to Data Source(s)\" Issue","assignedTo":"Joey McCarthy","createdBy":"Shane O'Halloran","severity":"2 - High","state":"New","tags":"Customer Reported; DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"148249","type":"Bug","title":"Finalize FTP: Not triggering a refresh of the dataverse incremental fact data model","assignedTo":"Yamini Karthick","createdBy":"Shane O'Halloran","severity":"1 - Critical","state":"Closed","tags":"Customer Reported; DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"147552","type":"Bug","title":"Multi Period Upload: If any month gets Invalid File the Job does not end","assignedTo":"Diego Smaire","createdBy":"Shane O'Halloran","severity":"3 - Medium","state":"Closed","tags":"DV_Prod_CECL_Release_2026; Multi Period Upload - Bugs; RequestingProduct_ModelIQ"},{"id":"147541","type":"Bug","title":"Data Import: Unexpected Warning on Segment","assignedTo":"Diego Smaire","createdBy":"Shane O'Halloran","severity":"3 - Medium","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"147320","type":"Bug","title":"Dataverse | Multi Period | ModelIQ - Application Error when AsOfDate column has EOPDate name","assignedTo":"Liam Fleming","createdBy":"Diego Smaire","severity":"3 - Medium","state":"Closed","tags":"DataVerse; DV_Prod_CECL_Release_2026; Multi Period Upload - Bugs; RequestingProduct_Dataverse"},{"id":"146836","type":"Bug","title":"DataColumnAlias - missing for certain module setups","assignedTo":"Yiling Quan","createdBy":"Shane O'Halloran","severity":"2 - High","state":"Closed","tags":"Customer Reported; DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"145929","type":"Bug","title":"Calculated Fields: Import Failing when CF results contain the word END","assignedTo":"Yamini Karthick","createdBy":"Shane O'Halloran","severity":"3 - Medium","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"145446","type":"Bug","title":"Dataverse | Charge Off And Recovery |  Reduced Validations - Incorrect behaviour and Application Error when importing a file for before Required Columns Start Date","assignedTo":"Diego Smaire","createdBy":"Diego Smaire","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"145413","type":"User Story","title":"Model IQ / CECL | Data Import | Connect Charge Off and Recoveries data source to Model IQ licenses","assignedTo":"Shane O'Halloran","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_ModelIQ"},{"id":"144680","type":"Bug","title":"Dataverse | Multi Period  - Duplicate as of date error is returned when try to import a file for same month, but for different days","assignedTo":"Diego Smaire","createdBy":"Diego Smaire","severity":"4 - Low","state":"Closed","tags":"DV_Prod_CECL_Release_2026; Multi Period Upload - Bugs; RequestingProduct_ModelIQ"},{"id":"144679","type":"Bug","title":"Invalid Module setup for dataverse is displaying error about tab name on import","assignedTo":"Liam Fleming","createdBy":"John Hartnett","severity":"4 - Low","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"144346","type":"Bug","title":"Multiple Charge Off / Recovery per instrument not allowed","assignedTo":"Shane O'Halloran","createdBy":"Sam Horgan","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"143441","type":"Bug","title":"Dataverse | Charge Off and Recovery - Import fails for Explorer-only customers with Invalid column name 'InstrumentID_Validator'","assignedTo":"Diego Smaire","createdBy":"Diego Smaire","severity":"2 - High","state":"Closed","tags":"DataVerse; DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"143035","type":"Bug","title":"Dataverse | Charge Off and Recovery - Incorrect validation message when the InstrumentID is blank","assignedTo":"Diego Smaire","createdBy":"Diego Smaire","severity":"4 - Low","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"142837","type":"Bug","title":"Dataverse | Charge Off and Recovery - Application error and normalization failing when import a file with same InstrumentID for a different data source","assignedTo":"Diego Smaire","createdBy":"Diego Smaire","severity":"2 - High","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"141710","type":"Bug","title":"Need to unhide Charge off Recovery Data source","assignedTo":"Diego Smaire","createdBy":"Sahitya Dilip","severity":"2 - High","state":"Closed","tags":"DataVerse; DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"140565","type":"User Story","title":"Copy to test just for CECL: Model IQ / CECL | Data Import | Loans, Leases, Credit Cards - new importable fields to support Model IQ - DB Changes","assignedTo":"Shane O'Halloran","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"139700","type":"User Story","title":"Add CECL to the Dataverse application app switcher","assignedTo":"Shane O'Halloran","createdBy":"Shane O'Halloran","severity":"","state":"Dev Backlog","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"136848","type":"Bug","title":"General Ledger. Missing validation for optional fields ALMAccountNum and BUDAccountNum","assignedTo":"Yiling Quan","createdBy":"Marianna Ianiv","severity":"3 - Medium","state":"Closed","tags":"automation_development; DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"136189","type":"Bug","title":"Model IQ -Data Import : Default value to be populated for InsuredSweepFlag ,BrokeredDepFlag, PrepayPenaltyFlag, IndividuallyAnalyzedFlag","assignedTo":"Christopher Garde","createdBy":"Sahitya Dilip","severity":"3 - Medium","state":"New","tags":"DataVerse; DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"134798","type":"User Story","title":"Model IQ / CECL | Data Import | Changes to CECL module required fields","assignedTo":"Yiling Quan","createdBy":"Shane O'Halloran","severity":"","state":"Bug Backlog","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"134005","type":"User Story","title":"Model IQ / CECL | Data Import | Add 'Model IQ - Credit Modelling' module to Dataverse","assignedTo":"Sahitya Dilip","createdBy":"Shane O'Halloran","severity":"","state":"Bug Backlog","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_ModelIQ"},{"id":"128977","type":"User Story","title":"Model IQ / CECL | Data Import | Connect Investments data source to CECL module","assignedTo":"Sahitya Dilip","createdBy":"Shane O'Halloran","severity":"","state":"Bug Backlog","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"125748","type":"User Story","title":"Model IQ / CECL | New Data Source Type: ChargeOff/Recovery | Script to populate ChargeOff/Recovery tables.","assignedTo":"Sam Horgan","createdBy":"Sam Horgan","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"125163","type":"User Story","title":"Model IQ / CECL | New Data Source Type: ChargeOff/Recovery | Remove existing Charge off and recovery fields from tables","assignedTo":"Sam Horgan","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"123612","type":"User Story","title":"Model IQ / CECL | Account Assignment | SubProductID  - Add as assignable field for other data source types","assignedTo":"Shane O'Halloran","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_ModelIQ"},{"id":"121329","type":"Bug","title":"Account Assignment Ruleset: Update error message received when Account Type parents are not setup","assignedTo":"Yamini Karthick","createdBy":"Shane O'Halloran","severity":"4 - Low","state":"Closed","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_Dataverse"},{"id":"118952","type":"User Story","title":"Model IQ / CECL | Account Assignment | New Assignment Method: Use Call Code","assignedTo":"Shane O'Halloran","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"118951","type":"User Story","title":"Model IQ / CECL | Account Assignment | New Assignment Value: CECLAccountNum","assignedTo":"Shane O'Halloran","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"118949","type":"User Story","title":"Model IQ / CECL | New Data Source Type: ChargeOff/Recovery | Import Fields and Validations","assignedTo":"Sam Horgan","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"118948","type":"User Story","title":"Model IQ / CECL | New Data Source Type: ChargeOff/Recovery | Create Data Source","assignedTo":"Sam Horgan","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"},{"id":"118947","type":"User Story","title":"Model IQ / CECL | New Data Source Type: ChargeOff/Recovery | DB Tables","assignedTo":"Sam Horgan","createdBy":"Shane O'Halloran","severity":"","state":"Resolved","tags":"DV_Prod_CECL_Release_2026; RequestingProduct_CECL"}];/*__RAW_END__*/
+
+function getProduct(tags){
+  const m=tags.match(/RequestingProduct_(\w+)/);
+  return m?m[1]:'Unknown';
+}
+
+const ID_CAT={
+  '118951':'Account Assignment','118952':'Account Assignment','123612':'Account Assignment',
+  '121329':'Account Assignment','133453':'Customer Reported',
+  '139700':'Platform & Infrastructure','140110':'Platform & Infrastructure',
+  '93940':'Data Import Core','139896':'Data Import Core','139341':'Multi Period Upload',
+  '136780':'Adjusted GL & Transactions','141265':'Data Import Core',
+  '139917':'Platform & Infrastructure','145344':'Data Import Core',
+  '136189':'Import Validation & Field Bugs','136848':'Import Validation & Field Bugs',
+  '144679':'Import Validation & Field Bugs','141427':'Import Validation & Field Bugs',
+  '145951':'Data Import Core','145929':'Data Import Core',
+  '139275':'GL Recon',
+};
+
+const RULES=[
+  {cat:'Multi Period Upload',test:t=>/multi.?period|muti.?period/i.test(t)},
+  {cat:'CECL - ChargeOff/Recovery',test:t=>/charge.?off|recovery/i.test(t)},
+  {cat:'Account Assignment',test:t=>/account.?assignment|CECLAccountNum|call.?code/i.test(t)},
+  {cat:'Model IQ / CECL - New Fields & Modules',test:t=>/model.?iq.*data.?import|cecl.*data.?import|model.?iq.*CECL|connect.*cecl|connect.*model.?iq|changes.*cecl.*required|investments.*data/i.test(t)||(t.startsWith('Model IQ / CECL')&&!/account.?assignment/i.test(t))},
+  {cat:'Import Validation & Field Bugs',test:t=>/validation|import.*fail/i.test(t)},
+  {cat:'Data Import Core',test:t=>/import|data.?source/i.test(t)},
+  {cat:'Platform & Infrastructure',test:t=>/pendo|app.?switcher|validation.?split|bi.?refresh/i.test(t)},
+];
+
+function classify(id,title,tags){
+  if(ID_CAT[id])return ID_CAT[id];
+  for(const r of RULES){
+    if(r.test(title,tags||''))return r.cat;
+  }
+  return 'Other';
+}
+
+const DATA=[];
+const seen=new Set();
+RAW.forEach(item=>{
+  if(seen.has(item.id))return;
+  seen.add(item.id);
+  const product=getProduct(item.tags);
+  const category=classify(item.id,item.title,item.tags);
+  DATA.push({...item,product,category,createdBy:item.createdBy||'',severity:item.severity||''});
+});
+DATA.sort((a,b)=>parseInt(b.id)-parseInt(a.id));
+
+document.getElementById('total-count').textContent=DATA.length;
+
+const isDone=s=>['Closed','Resolved'].includes(s);
+const isTest=s=>['Test','Fully in Test','QA Backlog','Ready for Testing'].includes(s);
+
+const types={},states={},products={},assignees={},creators={},severities={},categories={};
+DATA.forEach(d=>{
+  types[d.type]=(types[d.type]||0)+1;
+  states[d.state]=(states[d.state]||0)+1;
+  products[d.product]=(products[d.product]||0)+1;
+  categories[d.category]=(categories[d.category]||0)+1;
+  if(d.assignedTo)assignees[d.assignedTo]=(assignees[d.assignedTo]||0)+1;
+  if(d.createdBy)creators[d.createdBy]=(creators[d.createdBy]||0)+1;
+  if(d.severity)severities[d.severity]=(severities[d.severity]||0)+1;
+});
+
+const doneCount=DATA.filter(d=>isDone(d.state)).length;
+const testCount=DATA.filter(d=>isTest(d.state)).length;
+const openCount=DATA.length-doneCount-testCount;
+const sb=document.getElementById('stats-bar');
+sb.innerHTML=`<div class="stat"><div class="val">${DATA.length}</div><div class="lbl">Total Items</div></div>`+
+  Object.entries(types).sort((a,b)=>b[1]-a[1]).map(([k,v])=>{
+    const c=k==='Bug'?'r':k==='User Story'?'g':k==='Task'?'b':'';
+    return `<div class="stat"><div class="val ${c}">${v}</div><div class="lbl">${k}s</div></div>`;
+  }).join('')+
+  `<div class="stat" style="border-left:2px solid var(--border);padding-left:20px"><div class="val g">${doneCount}</div><div class="lbl">Completed</div></div>`+
+  `<div class="stat"><div class="val b">${testCount}</div><div class="lbl">In Test</div></div>`+
+  `<div class="stat"><div class="val o">${openCount}</div><div class="lbl">Open</div></div>`;
+
+['f-type','f-state','f-product','f-assigned','f-createdBy','f-severity','f-category'].forEach(id=>{
+  const sel=document.getElementById(id);
+  const src=id==='f-type'?types:id==='f-state'?states:id==='f-product'?products:id==='f-category'?categories:id==='f-createdBy'?creators:id==='f-severity'?severities:assignees;
+  Object.keys(src).sort().forEach(k=>{
+    const o=document.createElement('option');
+    o.value=k;o.textContent=`${k} (${src[k]})`;
+    sel.appendChild(o);
+  });
+});
+
+const stateClass=s=>['Closed','Resolved'].includes(s)?s:['Test','Fully in Test','QA Backlog','Ready for Testing'].includes(s)?'Test':['New','Dev Backlog','Bug Backlog'].includes(s)?'New':['Under Review','Blocked','Planning','Need More Info','Deferred'].includes(s)?'New':s==='Development'?'Development':'default';
+const typeClass=t=>t.replace(/\s/g,'');
+const prodClass=p=>['ModelIQ','Prof','CECL','Dataverse','Planning'].includes(p)?p:'default';
+const sevClass=s=>{const n=s?s.charAt(0):'';return n>='1'&&n<='4'?'sev'+n:'';};
+const sevLabel=s=>s||'—';
+
+const collapsedGroups=new Set();
+
+function toggleGroup(name){
+  if(collapsedGroups.has(name))collapsedGroups.delete(name);else collapsedGroups.add(name);
+  render();
+}
+
+function rowHtml(d){
+  return `<tr>
+    <td class="id-cell"><a href="${ADO}${d.id}" target="_blank" rel="noopener">#${d.id}</a></td>
+    <td><span class="type-pill ${typeClass(d.type)}">${d.type}</span></td>
+    <td class="title-cell">${d.title}</td>
+    <td><span class="state-pill ${stateClass(d.state)}">${d.state}</span></td>
+    <td><span class="product-tag ${prodClass(d.product)}">${d.product}</span></td>
+    <td class="assigned-cell">${d.assignedTo||'—'}</td>
+    <td class="assigned-cell">${d.createdBy||'—'}</td>
+    <td>${d.severity?`<span class="severity-pill ${sevClass(d.severity)}">${sevLabel(d.severity)}</span>`:d.type==='Bug'?'—':''}</td>
+    <td style="font-size:11px;color:var(--grey)">${d.category}</td>
+  </tr>`;
+}
+
+function groupHeaderHtml(name,items){
+  const done=items.filter(d=>isDone(d.state)).length;
+  const test=items.filter(d=>isTest(d.state)).length;
+  const open=items.length-done-test;
+  const total=items.length;
+  const w=140;
+  const dw=Math.round(done/total*w);
+  const tw=Math.round(test/total*w);
+  const ow=w-dw-tw;
+  const collapsed=collapsedGroups.has(name);
+  return `<tr class="group-row ${collapsed?'collapsed':''}" onclick="toggleGroup('${name.replace(/'/g,"\\'")}')">
+    <td colspan="9">
+      <i class="fa-solid fa-chevron-down group-chevron"></i>
+      <span class="group-title">${name}</span>
+      <span class="group-count">${total}</span>
+      <span class="group-progress">
+        <span class="gp-bar gp-done" style="width:${dw}px" title="${done} done"></span>
+        <span class="gp-bar gp-test" style="width:${tw}px" title="${test} in test"></span>
+        <span class="gp-bar gp-open" style="width:${ow}px" title="${open} open"></span>
+        <span class="gp-label">${done}/${total} done</span>
+      </span>
+    </td>
+  </tr>`;
+}
+
+function render(){
+  const q=document.getElementById('f-search').value.toLowerCase();
+  const ft=document.getElementById('f-type').value;
+  const fs=document.getElementById('f-state').value;
+  const fp=document.getElementById('f-product').value;
+  const fa=document.getElementById('f-assigned').value;
+  const fcb=document.getElementById('f-createdBy').value;
+  const fsev=document.getElementById('f-severity').value;
+  const fc=document.getElementById('f-category').value;
+  const fcomp=document.getElementById('f-completion').value;
+  const gb=document.getElementById('f-groupby').value;
+  const filtered=DATA.filter(d=>{
+    if(ft&&d.type!==ft)return false;
+    if(fs&&d.state!==fs)return false;
+    if(fp&&d.product!==fp)return false;
+    if(fa&&d.assignedTo!==fa)return false;
+    if(fcb&&d.createdBy!==fcb)return false;
+    if(fsev&&d.severity!==fsev)return false;
+    if(fc&&d.category!==fc)return false;
+    if(fcomp==='done'&&!isDone(d.state))return false;
+    if(fcomp==='test'&&!isTest(d.state))return false;
+    if(fcomp==='open'&&(isDone(d.state)||isTest(d.state)))return false;
+    if(fcomp==='notdone'&&isDone(d.state))return false;
+    if(q&&!(d.id.includes(q)||d.title.toLowerCase().includes(q)||(d.assignedTo||'').toLowerCase().includes(q)||(d.createdBy||'').toLowerCase().includes(q)||d.product.toLowerCase().includes(q)||d.category.toLowerCase().includes(q)))return false;
+    return true;
+  });
+  const tbody=document.getElementById('tbody');
+  const nr=document.getElementById('no-results');
+  document.getElementById('visible-count').textContent=filtered.length;
+  if(!filtered.length){tbody.innerHTML='';nr.style.display='';return;}
+  nr.style.display='none';
+
+  if(!gb){
+    tbody.innerHTML=filtered.map(rowHtml).join('');
+    return;
+  }
+
+  const groups={};
+  filtered.forEach(d=>{
+    const key=d[gb]||'Unassigned';
+    (groups[key]=groups[key]||[]).push(d);
+  });
+
+  const catOrder=['CECL - ChargeOff/Recovery','Model IQ / CECL - New Fields & Modules','Account Assignment','Import Validation & Field Bugs','Data Import Core','Multi Period Upload','GL Recon','Adjusted GL & Transactions','Platform & Infrastructure','Customer Reported','Other'];
+  const sortedKeys=Object.keys(groups).sort((a,b)=>{
+    if(gb==='category'){
+      const ia=catOrder.indexOf(a),ib=catOrder.indexOf(b);
+      if(ia!==-1&&ib!==-1)return ia-ib;
+      if(ia!==-1)return -1;if(ib!==-1)return 1;
+    }
+    return b.length-a.length||a.localeCompare(b);
+  });
+
+  let html='';
+  for(const key of sortedKeys){
+    const items=groups[key];
+    html+=groupHeaderHtml(key,items);
+    if(!collapsedGroups.has(key)){
+      html+=items.map(rowHtml).join('');
+    }
+  }
+  tbody.innerHTML=html;
+}
+
+['f-search','f-type','f-state','f-product','f-assigned','f-createdBy','f-severity','f-category','f-completion','f-groupby'].forEach(id=>{
+  document.getElementById(id).addEventListener(id==='f-search'?'input':'change',render);
+});
+
+let sortCol='id',sortAsc=false;
+document.querySelectorAll('thead th[data-col]').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const col=th.dataset.col;
+    if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=true;}
+    DATA.sort((a,b)=>{
+      let va=a[col]||'',vb=b[col]||'';
+      if(col==='id'){va=parseInt(va);vb=parseInt(vb);}
+      else{va=va.toLowerCase();vb=vb.toLowerCase();}
+      return sortAsc?(va>vb?1:-1):(va<vb?1:-1);
+    });
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
